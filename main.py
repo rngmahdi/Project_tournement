@@ -24,5 +24,4 @@ button.configure(fg_color="#37CEFE",width=400,height=80)
 button.pack(pady=20,padx=20)
 button.place(x=(width/2)-200 ,y=height/2)
 
-
 root.mainloop()
