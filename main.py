@@ -14,8 +14,8 @@ width = root.winfo_screenwidth()
 height = root.winfo_screenheight()
 
 buttonFont = Font(family="Tekton Pro",
-                       size=40,
-                       weight="bold",
+                 size=40,
+                 weight="bold",
                        )
 
 button = customtkinter.CTkButton(root, text="Create new tournament",
