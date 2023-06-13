@@ -6,11 +6,12 @@ class TouranementCreationPage(customtkinter.CTk):
         super().__init__()
         
         # Main
-        self.destroy()
+        for child in window.winfo_children():
+            child.destroy()
+            
         window.title("Create a new Tourenement")
-        
+
         # Widgets
+        customtkinter.CTkOptionMenu(window, values=["option 1", "option 2"])
         
-        
-        
-        self.mainloop()
+    
