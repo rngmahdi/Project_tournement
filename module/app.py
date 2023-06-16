@@ -1,11 +1,10 @@
 import customtkinter 
 import tkinter as tk
 from touranement_creation import TouranementCreationPage
-from route import Route
 
 
 
-class App(customtkinter.CTk,Route):
+class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
         # Main
@@ -19,7 +18,6 @@ class App(customtkinter.CTk,Route):
         
         self.label.grid(row=0,column=0,padx=20,pady=20)
         self.button.grid(row=1,column=0,padx=20,pady=10,sticky="ew")
-        
         
         self.mainloop()
         

@@ -1,17 +1,17 @@
 import customtkinter 
 import sqlite3
 import tkinter as tk
-from route import Route
+from player import Player
 
-class TouranementCreationPage(customtkinter.CTk,Route):
+class TouranementCreationPage(customtkinter.CTk):
     def __init__(self,window):
         super().__init__()
-        
         # Main
-        for child in window.winfo_children():
+        self.window = window
+        for child in self.window.winfo_children():
             child.destroy()
             
-        window.title("Create a new Tourenement")
+        self.window.title("Create a new Tourenement")
         
         # Widgets
         
@@ -25,8 +25,8 @@ class TouranementCreationPage(customtkinter.CTk,Route):
         self.date = customtkinter.CTkEntry(self.frame_2,placeholder_text="startingDate")
         
         self.frame_3 = customtkinter.CTkFrame(window,height=100,width=200)
-        self.btn1 = customtkinter.CTkButton(self.frame_3,text="Ceate")
-        self.btn2 = customtkinter.CTkButton(self.frame_3,text="Cancel")
+        self.btn1 = customtkinter.CTkButton(self.frame_3,text="Ceate",command=self.createNewTournament)
+        self.btn2 = customtkinter.CTkButton(self.frame_3,text="Cancel",command=self.player)
 
         self.frame_1.grid()
         self.fullName.grid()
@@ -56,9 +56,10 @@ class TouranementCreationPage(customtkinter.CTk,Route):
         connect = sqlite3.connect("./database/database.db")
         cursor = connect.cursor()
 
-        cursor.execute("INSERT INTO db_tournament VALUES (title,place,date,name_of_creator,type)",(title,place,date,fullName,type))
+        cursor.execute("INSERT INTO dbtournament (title,place,date,name_of_creator,type) VALUES (?,?,?,?,?)",(title,place,date,fullName,type))
         connect.commit()
         connect.close()
+        
+    def player(self):
+        Player(self.window)
     
-    def destroy(self):
-        return super().destroy()
