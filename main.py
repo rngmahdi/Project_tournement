@@ -1,7 +1,6 @@
 from tkinter import * 
-from tkinter import font
-from tkinter.font import Font
 from tkinter import ttk
+from view.tournament_list import TournamentList
 import customtkinter
 
 root = Tk()
@@ -11,8 +10,14 @@ root.geometry("800x700")
 
 ########################################################################
 
+def tournament_list():
+      window = TournamentList(root)
+      # root.quit()
+
+
 button = customtkinter.CTkButton(root, text="Create new tournament",
-                                 font=("Bahnschrift Light Condensed",40,"bold"))
+                                 font=("Bahnschrift Light Condensed",40,"bold"),
+                                 command=tournament_list)
 button.configure(fg_color="#37CEFE",width=400,height=80)
 button.pack(pady=20,padx=20)
 button.place(anchor = CENTER, relx = .5, rely = .55)
