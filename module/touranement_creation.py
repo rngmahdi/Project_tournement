@@ -25,8 +25,13 @@ class TouranementCreationPage(customtkinter.CTk):
         self.date = customtkinter.CTkEntry(self.frame_2,placeholder_text="startingDate")
         
         self.frame_3 = customtkinter.CTkFrame(window,height=100,width=200)
+<<<<<<< HEAD
         self.btn1 = customtkinter.CTkButton(self.frame_3,text="Ceate",command=self.createNewTournament)
         self.btn2 = customtkinter.CTkButton(self.frame_3,text="Cancel",command=self.player)
+=======
+        self.btn1 = customtkinter.CTkButton(self.frame_3,text="Create")
+        self.btn2 = customtkinter.CTkButton(self.frame_3,text="Cancel")
+>>>>>>> 1c7d8b56093a4ff17521a723b77c34af8be60e69
 
         self.frame_1.grid()
         self.fullName.grid()
