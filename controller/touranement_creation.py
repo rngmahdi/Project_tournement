@@ -51,7 +51,7 @@ class TouranementCreationPage(customtkinter.CTk):
         connect = sqlite3.connect("./database/database.db")
         cursor = connect.cursor()
 
-        cursor.execute("INSERT INTO dbtournament (title,place,date,name_of_creator,type) VALUES (?,?,?,?,?)",(title,place,date,fullName,type))
+        cursor.execute("INSERT INTO tournament (title,place,date,name_of_creator,type) VALUES (?,?,?,?,?)",(title,place,date,fullName,type))
         connect.commit()
         connect.close()
         
