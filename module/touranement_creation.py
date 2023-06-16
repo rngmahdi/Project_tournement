@@ -25,7 +25,7 @@ class TouranementCreationPage(customtkinter.CTk,Route):
         self.date = customtkinter.CTkEntry(self.frame_2,placeholder_text="startingDate")
         
         self.frame_3 = customtkinter.CTkFrame(window,height=100,width=200)
-        self.btn1 = customtkinter.CTkButton(self.frame_3,text="Ceate")
+        self.btn1 = customtkinter.CTkButton(self.frame_3,text="Create")
         self.btn2 = customtkinter.CTkButton(self.frame_3,text="Cancel")
 
         self.frame_1.grid()
