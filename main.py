@@ -1,6 +1,5 @@
 from tkinter import * 
 from tkinter import ttk
-from view.tournament_list import TournamentList
 import customtkinter
 
 root = Tk()
