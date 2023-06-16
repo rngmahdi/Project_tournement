@@ -8,6 +8,10 @@ class TouranementCreationPage(customtkinter.CTk):
         super().__init__()
         # Main
         self.window = window
+        self.columnconfigure(0,weight=1)
+        self.columnconfigure(1,weight=1)
+        self.rowconfigure(0,weight=1)
+        
         for child in self.window.winfo_children():
             child.destroy()
             
@@ -15,38 +19,24 @@ class TouranementCreationPage(customtkinter.CTk):
         
         # Widgets
         
-        self.frame_1 = customtkinter.CTkFrame(window,height=100,width=200)
+        self.input_frame = customtkinter.CTkFrame(self.window,fg_color="yellow")
+        self.bg_frame = customtkinter.CTkFrame(self.window)
+        
+        self.frame_1 = customtkinter.CTkFrame(self.window,height=100,width=200)
         self.fullName = customtkinter.CTkEntry(self.frame_1,placeholder_text="fullName")
         
-        self.frame_2 = customtkinter.CTkFrame(window,height=100,width=200)
+        self.frame_2 = customtkinter.CTkFrame(self.window,height=100,width=200)
         self.title = customtkinter.CTkEntry(self.frame_2,placeholder_text="title")
-        self.type = customtkinter.CTkEntry(self.frame_2,placeholder_text="type")
+        self.type = customtkinter.CTkEntry(self.frame_2,placeholder_text="type") 
         self.place = customtkinter.CTkEntry(self.frame_2,placeholder_text="place")
-        self.date = customtkinter.CTkEntry(self.frame_2,placeholder_text="startingDate")
+        self.date = customtkinter.CTkEntry(self.frame_2,placeholder_text="date")
         
-        self.frame_3 = customtkinter.CTkFrame(window,height=100,width=200)
-<<<<<<< HEAD
+        self.frame_3 = customtkinter.CTkFrame(self.window,height=100,width=200)
         self.btn1 = customtkinter.CTkButton(self.frame_3,text="Ceate",command=self.createNewTournament)
         self.btn2 = customtkinter.CTkButton(self.frame_3,text="Cancel",command=self.player)
-=======
-        self.btn1 = customtkinter.CTkButton(self.frame_3,text="Create")
-        self.btn2 = customtkinter.CTkButton(self.frame_3,text="Cancel")
->>>>>>> 1c7d8b56093a4ff17521a723b77c34af8be60e69
 
-        self.frame_1.grid()
-        self.fullName.grid()
-        
-        self.frame_2.grid()
-        self.title.grid()
-        self.type.grid()
-        self.place.grid()
-        self.date.grid()
-        
-        
-        self.frame_3.grid()
-        self.btn1.grid()
-        self.btn2.grid()
-        
+        self.input_frame.grid(column=0,row=0,sticky="ewns")
+        self.bg_frame.grid(column=1,row=0,sticky="ewns")
         
     # Methods
     def createNewTournament(self):
