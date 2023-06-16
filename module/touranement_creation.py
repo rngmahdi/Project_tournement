@@ -1,7 +1,9 @@
 import customtkinter 
+import sqlite3
 import tkinter as tk
+from route import Route
 
-class TouranementCreationPage(customtkinter.CTk):
+class TouranementCreationPage(customtkinter.CTk,Route):
     def __init__(self,window):
         super().__init__()
         
@@ -14,36 +16,26 @@ class TouranementCreationPage(customtkinter.CTk):
         # Widgets
         
         self.frame_1 = customtkinter.CTkFrame(window,height=100,width=200)
-        self.firstName = customtkinter.CTkEntry(self.frame_1,placeholder_text="firstName")
-        self.lastName = customtkinter.CTkEntry(self.frame_1,placeholder_text="lastName")
-        self.birthDay = customtkinter.CTkEntry(self.frame_1,placeholder_text="birthDay")
-        self.email = customtkinter.CTkEntry(self.frame_1,placeholder_text="email")
+        self.fullName = customtkinter.CTkEntry(self.frame_1,placeholder_text="fullName")
         
         self.frame_2 = customtkinter.CTkFrame(window,height=100,width=200)
         self.title = customtkinter.CTkEntry(self.frame_2,placeholder_text="title")
         self.type = customtkinter.CTkEntry(self.frame_2,placeholder_text="type")
-        self.rounds = customtkinter.CTkEntry(self.frame_2,placeholder_text="rounds")
         self.place = customtkinter.CTkEntry(self.frame_2,placeholder_text="place")
-        self.startingDate = customtkinter.CTkEntry(self.frame_2,placeholder_text="startingDate")
-        self.endingDate = customtkinter.CTkEntry(self.frame_2,placeholder_text="endtingDate")
+        self.date = customtkinter.CTkEntry(self.frame_2,placeholder_text="startingDate")
         
         self.frame_3 = customtkinter.CTkFrame(window,height=100,width=200)
         self.btn1 = customtkinter.CTkButton(self.frame_3,text="Ceate")
         self.btn2 = customtkinter.CTkButton(self.frame_3,text="Cancel")
 
         self.frame_1.grid()
-        self.firstName.grid()
-        self.lastName.grid()
-        self.birthDay.grid()
-        self.email.grid()
+        self.fullName.grid()
         
         self.frame_2.grid()
         self.title.grid()
         self.type.grid()
-        self.rounds.grid()
         self.place.grid()
-        self.startingDate.grid()
-        self.endingDate.grid()
+        self.date.grid()
         
         
         self.frame_3.grid()
@@ -54,13 +46,19 @@ class TouranementCreationPage(customtkinter.CTk):
     # Methods
     def createNewTournament(self):
         
-        firstName = self.firstName.get()
-        lastName = self.lastName.get()
-        birthDay = self.birthDay.get()
-        email = self.email.get()
+        fullName = self.fullName.get()
         title = self.title.get()
         type = self.type.get()
-        rounds = self.rounds.get()
         place = self.place.get()
-        startingDate = self.startingDate.get()
-        endingDate = self.endingDate.get()
+        date = self.date.get()
+        
+
+        connect = sqlite3.connect("./database/database.db")
+        cursor = connect.cursor()
+
+        cursor.execute("INSERT INTO db_tournament VALUES (title,place,date,name_of_creator,type)",(title,place,date,fullName,type))
+        connect.commit()
+        connect.close()
+    
+    def destroy(self):
+        return super().destroy()

@@ -1,9 +1,11 @@
 import customtkinter 
 import tkinter as tk
 from touranement_creation import TouranementCreationPage
+from route import Route
 
 
-class App(customtkinter.CTk):
+
+class App(customtkinter.CTk,Route):
     def __init__(self):
         super().__init__()
         # Main
@@ -24,5 +26,8 @@ class App(customtkinter.CTk):
     # Methods
     def start(self):
         TouranementCreationPage(self)
+    
+    def destroy(self):
+        return self.quit()
     
 App()
