@@ -3,6 +3,7 @@ import sqlite3
 from tkinter import ttk
 import tkinter as tk
 import list_tournament_page
+from PIL import Image
 from player_page import PlayerPage
 
 class TouranementCreationPage(customtkinter.CTk):
@@ -10,33 +11,33 @@ class TouranementCreationPage(customtkinter.CTk):
         super().__init__()
         # Main
         self.main = container
+        self.main.columnconfigure((0,1),weight=1)
+        self.main.rowconfigure(0,weight=1)
         
-        self.fullName = customtkinter.CTkEntry(self.main,placeholder_text="fullName")
-        self.title = customtkinter.CTkEntry(self.main,placeholder_text="title")
-        self.type = customtkinter.CTkOptionMenu(self.main, values=["LOCAL", "REGIONAL"])
-        self.place = customtkinter.CTkEntry(self.main,placeholder_text="place")
-        self.date = customtkinter.CTkEntry(self.main,placeholder_text="date")
-        self.btn1 = customtkinter.CTkButton(self.main,text="Ceate",command=self.createNewTournament)
+        self.input_frame = customtkinter.CTkFrame(self.main)
+        self.input_frame.grid(row=0,column=0,sticky="news")
+        
+        self.img = customtkinter.CTkImage(dark_image=Image.open("./public/img/tbg.png"),size=(300,250))
+        
+        self.img_bg = customtkinter.CTkLabel(self.main,image=self.img,text="")
+        self.img_bg.grid(row=0,column=1,sticky="news")
+        
+               
+        self.fullName = customtkinter.CTkEntry(self.input_frame,placeholder_text="fullName")
+        self.title = customtkinter.CTkEntry(self.input_frame,placeholder_text="title")
+        self.type = customtkinter.CTkOptionMenu(self.input_frame, values=["LOCAL", "REGIONAL"])
+        self.place = customtkinter.CTkEntry(self.input_frame,placeholder_text="place")
+        self.date = customtkinter.CTkEntry(self.input_frame,placeholder_text="date")
+        self.btn1 = customtkinter.CTkButton(self.input_frame,text="Ceate",command=self.createNewTournament)
 
-        self.fullName.grid()
-        self.title.grid()
-        self.type.grid()
-        self.place.grid()
-        self.date.grid()
-        self.btn1.grid()
+        self.fullName.pack(pady=5,expand=True)
+        self.title.pack(pady=5,expand=True)
+        self.type.pack(pady=5,expand=True)
+        self.place.pack(pady=5,expand=True)
+        self.date.pack(pady=5,expand=True)
+        self.btn1.pack(pady=5,expand=True)
         
-    # Methods
-        
-        
-        
-    def listTournament(self):
-        self.cleanContainer(self.main)
-        list_tournament_page.TournamentList(self.main)
-    
-    def playersPage(self):
-        self.cleanContainer(self.main)
-        PlayerPage(self.main)
-        
+    # Method      
     
     def createNewTournament(self):
         try:

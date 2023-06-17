@@ -2,6 +2,9 @@ import customtkinter
 import list_tournament_page #Function
 from player_page import PlayerPage #class
 from touranement_creation_page import TouranementCreationPage #class
+from PIL import Image
+customtkinter.set_default_color_theme("config/custom_theme.json")
+
 
 class Root(customtkinter.CTk):
     def __init__(self):
@@ -14,17 +17,18 @@ class Root(customtkinter.CTk):
         self.geometry("600x500")
         self.title("Tournament Manager")
         
+        
         # Structure
         self.nav = customtkinter.CTkFrame(self,height=40)
         self.main = customtkinter.CTkFrame(self)
         
         # Menu
-        self.route_tournament_creation = customtkinter.CTkButton(self.nav,text="+ Tournament",command=self.tournamentPage)
+        self.route_tournament_creation = customtkinter.CTkButton(self.nav,text="+ Tournament",command=self.tournamentCreationPage)
         self.route_tournaments_list = customtkinter.CTkButton(self.nav,text="List Tournament",command=self.listTournamentPage)
         self.route_player = customtkinter.CTkButton(self.nav,text="Players",command=self.playerPage)
         
         # Current Active Page
-        self.tournamentPage()
+        self.tournamentCreationPage()
         
         self.nav.grid(row=0,column=0,sticky="new")
         self.main.grid(row=1,column=0,sticky="news")
@@ -36,7 +40,7 @@ class Root(customtkinter.CTk):
         self.mainloop()
         
     # Methods
-    def tournamentPage(self):
+    def tournamentCreationPage(self):
         self.cleanContainer(self.main)
         TouranementCreationPage(self.main)
              
