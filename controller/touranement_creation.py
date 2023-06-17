@@ -2,6 +2,8 @@ import customtkinter
 import sqlite3
 from tkinter import ttk
 import tkinter as tk
+import tournament_list
+
 
 class TouranementCreationPage(customtkinter.CTk):
     def __init__(self):
@@ -55,7 +57,7 @@ class TouranementCreationPage(customtkinter.CTk):
         
     def listTournament(self):
         self.cleanContainer(self.main)
-
+        tournament_list.TournamentList(self.main)
     
     def playersPage(self):
         self.cleanContainer(self.main)

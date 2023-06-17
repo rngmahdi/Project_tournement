@@ -1,11 +1,9 @@
 from tkinter import *
 from tkinter import ttk
-class TournamentList:
-    def __init__(self,root):
-        self.frame = Frame(root,width=500,height=500)
+def TournamentList(root):
+    frame = Frame(root,width=200,height=200,bg="red")
+    frame.pack()
 
 
 
-root = Tk()
-window = TournamentList(root)
-root.mainloop()
+
