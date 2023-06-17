@@ -5,9 +5,9 @@ import sqlite3
 
 
 def TournamentList(root):
-    frame = customtkinter.CTkFrame(root)
+    frame = customtkinter.CTkScrollableFrame(root,width=700,height=root.winfo_height()-100)
     frame.pack()
-
+    print(root.winfo_height())
     data = getTournamentData()
     if (len(data) != 0):
         for i in range(len(data)):
