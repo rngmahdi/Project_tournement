@@ -3,40 +3,48 @@ import sqlite3
 import tkinter as tk
 from player import Player
 
+
 class TouranementCreationPage(customtkinter.CTk):
-    def __init__(self,window):
+    def __init__(self):
         super().__init__()
         # Main
-        self.window = window
         self.columnconfigure(0,weight=1)
-        self.columnconfigure(1,weight=1)
         self.rowconfigure(0,weight=1)
-        
-        for child in self.window.winfo_children():
-            child.destroy()
+        self.rowconfigure(1,weight=13)
             
-        self.window.title("Create a new Tourenement")
+        self.title("Create a new Tourenement")
+        self.geometry("600x500")
         
-        # Widgets
+        self.nav = customtkinter.CTkFrame(self,height=40)
+        self.main = customtkinter.CTkFrame(self)
         
-        self.input_frame = customtkinter.CTkFrame(self.window,fg_color="yellow")
-        self.bg_frame = customtkinter.CTkFrame(self.window)
+        #* Routes
+        self.route_tournament_creation = customtkinter.CTkButton(self.nav,text="+ Tournament")
+        self.route_tournaments_list = customtkinter.CTkButton(self.nav,text="List Tournament")
+        self.route_player = customtkinter.CTkButton(self.nav,text="Players")
         
-        self.frame_1 = customtkinter.CTkFrame(self.window,height=100,width=200)
-        self.fullName = customtkinter.CTkEntry(self.frame_1,placeholder_text="fullName")
-        
-        self.frame_2 = customtkinter.CTkFrame(self.window,height=100,width=200)
-        self.title = customtkinter.CTkEntry(self.frame_2,placeholder_text="title")
-        self.type = customtkinter.CTkEntry(self.frame_2,placeholder_text="type") 
-        self.place = customtkinter.CTkEntry(self.frame_2,placeholder_text="place")
-        self.date = customtkinter.CTkEntry(self.frame_2,placeholder_text="date")
-        
-        self.frame_3 = customtkinter.CTkFrame(self.window,height=100,width=200)
-        self.btn1 = customtkinter.CTkButton(self.frame_3,text="Ceate",command=self.createNewTournament)
-        self.btn2 = customtkinter.CTkButton(self.frame_3,text="Cancel",command=self.player)
+        self.fullName = customtkinter.CTkEntry(self.main,placeholder_text="fullName")
+        self.title = customtkinter.CTkEntry(self.main,placeholder_text="title")
+        self.type = customtkinter.CTkOptionMenu(self.main, values=["LOCAL", "REGIONAL"])
+        self.place = customtkinter.CTkEntry(self.main,placeholder_text="place")
+        self.date = customtkinter.CTkEntry(self.main,placeholder_text="date")
+        self.btn1 = customtkinter.CTkButton(self.main,text="Ceate",command=self.createNewTournament)
 
-        self.input_frame.grid(column=0,row=0,sticky="ewns")
-        self.bg_frame.grid(column=1,row=0,sticky="ewns")
+        self.fullName.grid()
+        self.title.grid()
+        self.type.grid()
+        self.place.grid()
+        self.date.grid()
+        self.btn1.grid()
+        
+        self.route_tournament_creation.grid(row=0,column=0)
+        self.route_tournaments_list.grid(row=0,column=1)
+        self.route_player.grid(row=0,column=2)
+        
+        self.nav.grid(row=0,column=0,sticky="new")
+        self.main.grid(row=1,column=0,sticky="news")
+        
+        self.mainloop()
         
     # Methods
     def createNewTournament(self):
@@ -56,5 +64,9 @@ class TouranementCreationPage(customtkinter.CTk):
         connect.close()
         
     def player(self):
-        Player(self.window)
+        Player(self)
     
+    def destroy(self):
+        return self.quit()
+    
+TouranementCreationPage()
