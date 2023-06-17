@@ -16,14 +16,16 @@ class Root(customtkinter.CTk):
         self.rowconfigure(1,weight=13)
         self.geometry("600x500")
         self.title("Tournament Manager")
+        self.iconbitmap("./public/img/icon_edit.ico")
         
         
         # Structure
         self.nav = customtkinter.CTkFrame(self,height=40)
         self.main = customtkinter.CTkFrame(self)
         
-        # Menu
-        self.route_tournament_creation = customtkinter.CTkButton(self.nav,text="+ Tournament",command=self.tournamentCreationPage)
+        self.img = customtkinter.CTkImage(dark_image=Image.open("./public/img/icon_edit.png"),size=(15,15))
+        # Menu 
+        self.route_tournament_creation = customtkinter.CTkButton(self.nav,image=self.img,text="Tournament",command=self.tournamentCreationPage)
         self.route_tournaments_list = customtkinter.CTkButton(self.nav,text="List Tournament",command=self.listTournamentPage)
         self.route_player = customtkinter.CTkButton(self.nav,text="Players",command=self.playerPage)
         
