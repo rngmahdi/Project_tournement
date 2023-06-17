@@ -8,7 +8,7 @@ def TournamentList(root):
     frame = customtkinter.CTkFrame(root)
     frame.pack()
 
-    data = getTournamentData()
+    # data = getTournamentData()
     if (len(data) != 0):
         for i in range(len(data)):
             pass
