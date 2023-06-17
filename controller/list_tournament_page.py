@@ -52,11 +52,8 @@ def TournamentList(root):
             actions.grid(row=5,column=1)
             removeBtn = customtkinter.CTkButton(actions,text="Remove")
             removeBtn.grid(row=0,column=0)
-<<<<<<< HEAD:controller/tournament_list.py
             updateBtn = customtkinter.CTkButton(actions,text="Edit")
-=======
             updateBtn = customtkinter.CTkButton(actions,text="Update",command=lambda : print(i))
->>>>>>> fff22ff99b315d13ba4c43aa258c0a1cee57ae37:controller/list_tournament_page.py
             updateBtn.grid(row=0,column=1)
 
 
