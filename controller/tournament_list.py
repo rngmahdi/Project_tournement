@@ -52,7 +52,7 @@ def TournamentList(root):
             actions.grid(row=5,column=1)
             removeBtn = customtkinter.CTkButton(actions,text="Remove")
             removeBtn.grid(row=0,column=0)
-            updateBtn = customtkinter.CTkButton(actions,text="Update")
+            updateBtn = customtkinter.CTkButton(actions,text="Update",command=lambda : print(i))
             updateBtn.grid(row=0,column=1)
 
 
