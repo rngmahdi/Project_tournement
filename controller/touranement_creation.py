@@ -1,6 +1,7 @@
 import customtkinter 
 import sqlite3
-
+from tkinter import ttk
+import tkinter as tk
 
 class TouranementCreationPage(customtkinter.CTk):
     def __init__(self):
@@ -52,12 +53,50 @@ class TouranementCreationPage(customtkinter.CTk):
         self.date.grid()
         self.btn1.grid()
         
-        
     def listTournament(self):
         self.cleanContainer(self.main)
+
     
     def playersPage(self):
         self.cleanContainer(self.main)
+        
+        self.addPlayer_frame = customtkinter.CTkFrame(self.main,width=600)
+        self.listPlayer_frame = customtkinter.CTkFrame(self.main,width=600)
+        
+        self.fullName = customtkinter.CTkEntry(self.addPlayer_frame,placeholder_text="fullName")
+        self.rating = customtkinter.CTkEntry(self.addPlayer_frame,placeholder_text="rating")
+        self.phone = customtkinter.CTkEntry(self.addPlayer_frame,placeholder_text="phone")
+        self.email = customtkinter.CTkEntry(self.addPlayer_frame,placeholder_text="email")
+        self.btn1 = customtkinter.CTkButton(self.main,text="Add PLayer",command=self.addPlayer)
+        
+        self.tree = ttk.Treeview(self.listPlayer_frame, columns=('id','fullName', 'rating','phone' ,'email','tournamentId'), show='headings')
+        self.tree.heading('id', text='id')
+        self.tree.heading('fullName', text='Full Name')
+        self.tree.heading('rating', text='Rating')
+        self.tree.heading('phone', text='Phone')
+        self.tree.heading('email', text='Email')
+        self.tree.heading('tournamentId', text='Tour Id')
+        
+        # print(self.getAllPlayers())
+        for elem in self.getAllPlayers():
+            self.tree.insert('', tk.END, values=elem)
+        
+        self.fullName.grid()
+        self.fullName.grid()
+        self.rating.grid()
+        self.phone.grid()
+        self.email.grid()
+        
+        self.addPlayer_frame.grid(column=0,sticky="news")
+        self.btn1.grid(pady=10)
+        self.listPlayer_frame.grid(column=0,sticky="news")
+        
+    # 
+    # 
+    # 
+    # 
+    # 
+    # 
     
     def createNewTournament(self):
         try:
@@ -71,12 +110,40 @@ class TouranementCreationPage(customtkinter.CTk):
             connect = sqlite3.connect("./database/database.db")
             cursor = connect.cursor()
 
-            # cursor.execute("INSERT INTO tournament (title,place,date,name_of_creator,type) VALUES (?,?,?,?,?)",(title,place,date,fullName,type))
+            cursor.execute("INSERT INTO tournament (title,place,date,name_of_creator,type) VALUES (?,?,?,?,?)",(title,place,date,fullName,type))
             connect.commit()
             connect.close()
             print("Created")
         except:
             print("Failed")
+    
+    def addPlayer(self):
+        try:
+            fullName = self.fullName.get()
+            phone = self.phone.get()
+            email = self.email.get()
+            rating = self.rating.get()
+            connect = sqlite3.connect("./database/database.db")
+            cursor = connect.cursor()
+
+            cursor.execute("INSERT INTO player (fullname,rating,phone,email) VALUES (?,?,?,?)",(fullName,phone,email,rating))
+            connect.commit()
+            connect.close()
+            print("Player Addes")
+        except:
+            print("Failed to Add Player")
+            
+    def getAllPlayers(self):
+        try:
+            connect = sqlite3.connect("./database/database.db")
+            cursor = connect.cursor()
+
+            data = cursor.execute("SELECT * FROM player").fetchall()
+            connect.commit()
+            connect.close()
+            return data
+        except:
+            return False
     
     def destroy(self):
         return self.quit()
@@ -84,4 +151,5 @@ class TouranementCreationPage(customtkinter.CTk):
     def cleanContainer(self,container):
         for widget in container.winfo_children(): 
             widget.destroy()
+            
 TouranementCreationPage()
