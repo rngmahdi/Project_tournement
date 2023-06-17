@@ -71,19 +71,29 @@ class TouranementCreationPage(customtkinter.CTk):
         self.email = customtkinter.CTkEntry(self.addPlayer_frame,placeholder_text="email")
         self.btn1 = customtkinter.CTkButton(self.main,text="Add PLayer",command=self.addPlayer)
         
-        self.tree = ttk.Treeview(self.listPlayer_frame, columns=('id','fullName', 'rating','phone' ,'email','tournamentId'), show='headings')
-        self.tree.heading('id', text='id')
-        self.tree.heading('fullName', text='Full Name')
-        self.tree.heading('rating', text='Rating')
-        self.tree.heading('phone', text='Phone')
-        self.tree.heading('email', text='Email')
-        self.tree.heading('tournamentId', text='Tour Id')
+        # self.tree = ttk.Treeview(self.listPlayer_frame, columns=('id','fullName', 'rating','phone' ,'email','tournamentId'), show='headings')
+        # self.tree.heading('id', text='id')
+        # self.tree.heading('fullName', text='Full Name')
+        # self.tree.heading('rating', text='Rating')
+        # self.tree.heading('phone', text='Phone')
+        # self.tree.heading('email', text='Email')
+        # self.tree.heading('tournamentId', text='Tour Id')
         
-        # print(self.getAllPlayers())
-        for elem in self.getAllPlayers():
-            self.tree.insert('', tk.END, values=elem)
+        # # print(self.getAllPlayers())
+        # for elem in self.getAllPlayers():
+        #     self.tree.insert('', tk.END, values=elem)
         
-        self.fullName.grid()
+        for player in self.getAllPlayers():
+            fullName = player[1]
+            rating = player[2]
+            phone = player[3]
+            email = player[4]
+            player_frame = customtkinter.CTkFrame(self.listPlayer_frame)
+            player_frame.grid()
+            customtkinter.CTkLabel(player_frame,text=fullName).grid()
+            customtkinter.CTkButton(player_frame,text="Edit").grid()
+            
+        
         self.fullName.grid()
         self.rating.grid()
         self.phone.grid()
