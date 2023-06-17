@@ -4,7 +4,6 @@ from tkinter import ttk
 import tkinter as tk
 import tournament_list
 
-
 class TouranementCreationPage(customtkinter.CTk):
     def __init__(self):
         super().__init__()
@@ -63,7 +62,7 @@ class TouranementCreationPage(customtkinter.CTk):
         self.cleanContainer(self.main)
         
         self.addPlayer_frame = customtkinter.CTkFrame(self.main,width=600)
-        self.listPlayer_frame = customtkinter.CTkFrame(self.main,width=600)
+        self.listPlayer_frame = customtkinter.CTkScrollableFrame(self.main,width=600)
         
         self.fullName = customtkinter.CTkEntry(self.addPlayer_frame,placeholder_text="fullName")
         self.rating = customtkinter.CTkEntry(self.addPlayer_frame,placeholder_text="rating")
@@ -71,29 +70,27 @@ class TouranementCreationPage(customtkinter.CTk):
         self.email = customtkinter.CTkEntry(self.addPlayer_frame,placeholder_text="email")
         self.btn1 = customtkinter.CTkButton(self.main,text="Add PLayer",command=self.addPlayer)
         
-        # self.tree = ttk.Treeview(self.listPlayer_frame, columns=('id','fullName', 'rating','phone' ,'email','tournamentId'), show='headings')
-        # self.tree.heading('id', text='id')
-        # self.tree.heading('fullName', text='Full Name')
-        # self.tree.heading('rating', text='Rating')
-        # self.tree.heading('phone', text='Phone')
-        # self.tree.heading('email', text='Email')
-        # self.tree.heading('tournamentId', text='Tour Id')
+        self.tree = ttk.Treeview(self.listPlayer_frame, columns=('id','fullName', 'rating','phone' ,'email','tournamentId'), show='headings')
+        self.tree.heading('id', text='id')
+        self.tree.heading('fullName', text='Full Name')
+        self.tree.heading('rating', text='Rating')
+        self.tree.heading('phone', text='Phone')
+        self.tree.heading('email', text='Email')
+        self.tree.heading('tournamentId', text='Tour Id')
+
+        self.tree.column('id', anchor=tk.CENTER, width=80)
+        # self.tree.column('fullName', anchor=tk.CENTER, width=80)
+        self.tree.column('rating', anchor=tk.CENTER, width=80)
+        self.tree.column('phone', anchor=tk.CENTER, width=80)
+        self.tree.column('email', anchor=tk.CENTER, width=80)
+        self.tree.column('tournamentId', anchor=tk.CENTER, width=80)
         
-        # # print(self.getAllPlayers())
-        # for elem in self.getAllPlayers():
-        #     self.tree.insert('', tk.END, values=elem)
-        
-        for player in self.getAllPlayers():
-            fullName = player[1]
-            rating = player[2]
-            phone = player[3]
-            email = player[4]
-            player_frame = customtkinter.CTkFrame(self.listPlayer_frame)
-            player_frame.grid()
-            customtkinter.CTkLabel(player_frame,text=fullName).grid()
-            customtkinter.CTkButton(player_frame,text="Edit").grid()
+        # print(self.getAllPlayers())
+        for elem in self.getAllPlayers():
+            self.tree.insert('', tk.END, values=elem)
             
         
+        self.tree.grid()
         self.fullName.grid()
         self.rating.grid()
         self.phone.grid()
@@ -144,6 +141,25 @@ class TouranementCreationPage(customtkinter.CTk):
             print("Player Addes")
         except:
             print("Failed to Add Player")
+            
+            
+    def updatePlayer(self):
+        pass
+    
+    
+    def deletePlayer(self,id):
+        try:
+            connect = sqlite3.connect("./database/database.db")
+            cursor = connect.cursor()
+
+            cursor.execute("DELETE FROM  player WHERE id = ? ",(id,))
+            
+            connect.commit()
+            connect.close()
+            print("Player is deleted")
+        except:
+            print("Failed to delete player")
+            
             
     def getAllPlayers(self):
         try:
