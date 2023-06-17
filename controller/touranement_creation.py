@@ -22,7 +22,7 @@ class TouranementCreationPage(customtkinter.CTk):
         self.route_player = customtkinter.CTkButton(self.nav,text="Players",command=self.playersPage)
         
         # Current Active Page
-        # self.tournamentPage()
+        self.tournamentPage()
         
         self.nav.grid(row=0,column=0,sticky="new")
         self.main.grid(row=1,column=0,sticky="news")
