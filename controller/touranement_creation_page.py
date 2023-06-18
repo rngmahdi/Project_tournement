@@ -5,6 +5,7 @@ import tkinter as tk
 import list_tournament_page
 from PIL import Image
 from player_page import PlayerPage
+from message_box import MessageBox
 
 class TouranementCreationPage(customtkinter.CTk):
     def __init__(self,container):
@@ -47,17 +48,19 @@ class TouranementCreationPage(customtkinter.CTk):
             type = self.type.get()
             place = self.place.get()
             date = self.date.get()
-            
+            if(fullName == "" or title == "" or type == "" or place == "" or date == ""):
+                MessageBox(self.main,"Not Valid","warning")
+                
+            else:
+                connect = sqlite3.connect("./database/database.db")
+                cursor = connect.cursor()
 
-            connect = sqlite3.connect("./database/database.db")
-            cursor = connect.cursor()
-
-            cursor.execute("INSERT INTO tournament (title,place,date,name_of_creator,type) VALUES (?,?,?,?,?)",(title,place,date,fullName,type))
-            connect.commit()
-            connect.close()
-            print("Created")
+                cursor.execute("INSERT INTO tournament (title,place,date,name_of_creator,type) VALUES (?,?,?,?,?)",(title,place,date,fullName,type))
+                connect.commit()
+                connect.close()
+                MessageBox(self.main,"The Tournament is Created","success")
         except:
-            print("Failed")
+            MessageBox(self.main,"Error","error")
 
 
             

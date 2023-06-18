@@ -2,7 +2,7 @@ import customtkinter
 import sqlite3
 from tkinter import ttk
 import tkinter as tk
-
+from message_box import MessageBox
 
 class PlayerPage(customtkinter.CTk):
     def __init__(self,container):
@@ -36,17 +36,21 @@ class PlayerPage(customtkinter.CTk):
             phone = self.phone.get()
             email = self.email.get()
             rating = self.rating.get()
-            connect = sqlite3.connect("./database/database.db")
-            cursor = connect.cursor()
+            if(fullName == "" or phone == "" or email == "" or rating == ""):
+                MessageBox(self.main,"Not a Valid Player","warning")
+            else:
+                connect = sqlite3.connect("./database/database.db")
+                cursor = connect.cursor()
 
-            cursor.execute("INSERT INTO player (fullname,rating,phone,email) VALUES (?,?,?,?)",(fullName,phone,email,rating))
-            connect.commit()
-            connect.close()
-            self.getAllPlayers()
-            self.clearForm()
-            print("Player Addes")
+                cursor.execute("INSERT INTO player (fullname,rating,phone,email) VALUES (?,?,?,?)",(fullName,phone,email,rating))
+                connect.commit()
+                connect.close()
+                self.getAllPlayers()
+                self.clearForm()
+                MessageBox(self.main,"The Player is Added","success")
+                
         except:
-            print("Failed to Add Player")
+            MessageBox(self.main,"Failed to add the Player","error")
             
     def deletePlayer(self,id):
         try:
@@ -58,9 +62,9 @@ class PlayerPage(customtkinter.CTk):
             connect.commit()
             connect.close()
             self.getAllPlayers()
-            print("Player is deleted")
+            MessageBox(self.main,"The Player is Deleted","success")
         except:
-            print("Failed to delete player")
+            MessageBox(self.main,"Failed to delete the Player","error")
             
     def getAllPlayers(self):
         try:
@@ -72,9 +76,14 @@ class PlayerPage(customtkinter.CTk):
             connect.close()
             self.cleanContainer(self.listPlayer_frame)
             for i in range(0,len(data)):
-                customtkinter.CTkLabel(self.listPlayer_frame,text=data[i][1]).grid(row=i,column=1)
-                customtkinter.CTkButton(self.listPlayer_frame,text="Edit",command=lambda id=data[i][0]:self.editPlayer(id)).grid(row=i,column=2)            
-                customtkinter.CTkButton(self.listPlayer_frame,text="Remove",command=lambda id=data[i][0]:self.deletePlayer(id)).grid(row=i,column=3) 
+                div = customtkinter.CTkFrame(self.listPlayer_frame)
+                # div.rowconfigure(0,weight=1)
+                # div.rowconfigure((1,2),weight=2)
+                
+                div.grid(row=i,sticky="news")
+                customtkinter.CTkLabel(div,text=data[i][1]).grid(row=i,column=0)
+                customtkinter.CTkButton(div,text="Edit",command=lambda id=data[i][0]:self.editPlayer(id)).grid(row=i,column=1)            
+                customtkinter.CTkButton(div,text="Remove",command=lambda id=data[i][0]:self.deletePlayer(id)).grid(row=i,column=2) 
                 
         except:
             return False
@@ -121,9 +130,10 @@ class PlayerPage(customtkinter.CTk):
             self.btn1.configure(text="Add Player",command=self.addPlayer)
             self.clearForm()
             self.getAllPlayers()
-            print("player is updated")
+            MessageBox(self.main,"The Player is Updated","success")
+            
         except:
-            print("failed to update")
+            MessageBox(self.main,"Failed to Update The Player","error")
     
     def clearForm(self):
         self.fullName.delete(0,customtkinter.END)

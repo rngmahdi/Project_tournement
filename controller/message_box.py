@@ -10,6 +10,7 @@ class MessageBox(customtkinter.CTkToplevel):
         self.title(case)
         self.label = customtkinter.CTkLabel(self, text="ToplevelWindow")
         self.message = message
+        self.attributes('-topmost', 'true')
         self.case = case
         self.packImage()
         
@@ -23,6 +24,8 @@ class MessageBox(customtkinter.CTkToplevel):
             url = "./public/img/error.png"
         
         self.img = customtkinter.CTkImage(dark_image=Image.open(url),size=(30,30))
-        self.img_bg = customtkinter.CTkLabel(self,image=self.img,text=self.message,width=70)
-        self.img_bg.grid(row=0,column=1,sticky="news")
+        self.img_bg = customtkinter.CTkLabel(self,image=self.img,text="")
+        self.label = customtkinter.CTkLabel(self,text=self.message)
+        self.img_bg.grid(row=0,column=1)
+        self.label.grid(row=0,column=2)
         
