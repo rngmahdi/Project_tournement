@@ -67,9 +67,10 @@ def TournamentList(root):
             updateBtn = customtkinter.CTkButton(actions, text="Edit")
             idtournament = tournament_title_data.get()
 
-            updateBtn = customtkinter.CTkButton(
-                actions, text="Update", command=lambda idtournament=data[i][0]: updateTournament(idtournament, root))
-
+            # updateBtn = customtkinter.CTkButton(
+            #     actions, text="Update", command=lambda idtournament=data[i][0]: updateTournament(idtournament, root))
+            updateBtn = customtkinter.CTkOptionMenu(actions,values=["Players","Edit Tournament"])
+            updateBtn.set("Update")
             # print(idtournament)
             updateBtn.grid(row=0, column=1)
 
@@ -84,6 +85,9 @@ def getTournamentData():
 
 def getSpecificTournament(idTournament):
     connect = sqlite3.connect("./database/database.db")
+    cursor= connect.cursor()
+    tournament =cursor.execute(f"SELECT * FROM tournament where id = {int(idTournament)}").fetchone()
+    return tournament
 
 def updateTournament(idTournament, root):
     window = customtkinter.CTkToplevel(root)
@@ -106,7 +110,7 @@ def updateTournament(idTournament, root):
     type = customtkinter.CTkOptionMenu(input_frame, values=["LOCAL", "REGIONAL"])
     place = customtkinter.CTkEntry(input_frame, placeholder_text="place")
     date = customtkinter.CTkEntry(input_frame, placeholder_text="date")
-    btn1 = customtkinter.CTkButton(input_frame, text="Ceate", command=updateInfos)
+    btn1 = customtkinter.CTkButton(input_frame, text="update", command=lambda id=idTournament: updateInfos(id))
 
     fullName.pack(pady=5, expand=True)
     title.pack(pady=5, expand=True)
@@ -116,5 +120,6 @@ def updateTournament(idTournament, root):
     btn1.pack(pady=5, expand=True)
 
 
-def updateInfos():
-    pass
+def updateInfos(id):
+    data = getSpecificTournament(id)
+    print(data)
