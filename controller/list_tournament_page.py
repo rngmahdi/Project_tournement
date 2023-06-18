@@ -3,6 +3,7 @@ from tkinter import ttk
 import customtkinter
 from PIL import Image
 import sqlite3
+from match_page import window
 # import root
 
 
@@ -69,7 +70,8 @@ def TournamentList(root):
 
             # updateBtn = customtkinter.CTkButton(
             #     actions, text="Update", command=lambda idtournament=data[i][0]: updateTournament(idtournament, root))
-            updateBtn = customtkinter.CTkOptionMenu(actions,values=["Players","Edit Tournament"])
+            optionSelected = StringVar()
+            updateBtn = customtkinter.CTkOptionMenu(actions,values=["Players","Edit Tournament","Matches"],command= lambda  choice = optionSelected ,id = data[i][0]: optionMenu(choice,id,root),variable=optionSelected)
             updateBtn.set("Update")
             # print(idtournament)
             updateBtn.grid(row=0, column=1)
@@ -86,10 +88,14 @@ def getTournamentData():
 def getSpecificTournament(idTournament):
     connect = sqlite3.connect("./database/database.db")
     cursor= connect.cursor()
-    tournament =cursor.execute(f"SELECT * FROM tournament where id = {int(idTournament)}").fetchone()
+    tournament =cursor.execute(f"SELECT * FROM tournament where id = ?",(idTournament,)).fetchone()
+    connect.commit()
+    connect.close()
     return tournament
 
-def updateTournament(idTournament, root):
+def updateTournament(idTournament,root):
+    data = getSpecificTournament(idTournament)
+    # print(data)
     window = customtkinter.CTkToplevel(root)
     window.title("Update tournament")
     window.geometry("600x500")
@@ -110,8 +116,14 @@ def updateTournament(idTournament, root):
     type = customtkinter.CTkOptionMenu(input_frame, values=["LOCAL", "REGIONAL"])
     place = customtkinter.CTkEntry(input_frame, placeholder_text="place")
     date = customtkinter.CTkEntry(input_frame, placeholder_text="date")
-    btn1 = customtkinter.CTkButton(input_frame, text="update", command=lambda id=idTournament: updateInfos(id))
+    btn1 = customtkinter.CTkButton(input_frame, text="update", command=lambda id=idTournament,fullname = fullName,title=title,type=type,place=place,date=date: updateInfos(id,fullname,title,type,place,date))
 
+    fullName.insert(customtkinter.END,data[4])
+    title.insert(customtkinter.END,data[1])
+    type.set(data[5])
+    place.insert(customtkinter.END,data[2])
+    date.insert(customtkinter.END,data[3])
+    # 
     fullName.pack(pady=5, expand=True)
     title.pack(pady=5, expand=True)
     type.pack(pady=5, expand=True)
@@ -120,6 +132,24 @@ def updateTournament(idTournament, root):
     btn1.pack(pady=5, expand=True)
 
 
-def updateInfos(id):
-    data = getSpecificTournament(id)
-    print(data)
+def updateInfos(id,fullname,title,type,place,date):
+    fulnameNew = fullname.get()
+    titleNew = title.get()
+    typeNew = type.get()
+    placeNew = place.get()
+    dateNew = date.get()
+    try:
+        connect = sqlite3.connect("./database/database.db")
+        cursor = connect.cursor()
+        cursor.execute("UPDATE tournament SET title = ? , place = ? , date = ? , name_of_creator = ? , type = ? WHERE id = ? ",(titleNew,placeNew,dateNew,fulnameNew,typeNew,id))
+        connect.commit()
+        connect.close()
+    except:
+        print("error")
+    
+
+def optionMenu(choice,id,root):
+    if(choice == "Edit Tournament"):
+        updateTournament(id,root)
+    # print(f"choice : {choice}")
+    # print(f"id {id}")
