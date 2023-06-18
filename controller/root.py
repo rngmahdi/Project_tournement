@@ -3,6 +3,7 @@ import list_tournament_page #Function
 from player_page import PlayerPage #class
 from touranement_creation_page import TouranementCreationPage #class
 from PIL import Image
+from message_box import MessageBox
 customtkinter.set_default_color_theme("config/custom_theme.json")
 
 
@@ -38,6 +39,7 @@ class Root(customtkinter.CTk):
         self.route_tournament_creation.grid(row=0,column=0,padx=5)
         self.route_tournaments_list.grid(row=0,column=1,padx=5)
         self.route_player.grid(row=0,column=2,padx=5)
+        
         
         self.mainloop()
         

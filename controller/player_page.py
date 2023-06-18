@@ -11,9 +11,9 @@ class PlayerPage(customtkinter.CTk):
         self.main = container
         # Main
         
-        self.addPlayer_frame = customtkinter.CTkFrame(self.main,width=600)
+        self.addPlayer_frame = customtkinter.CTkFrame(self.main,width=600,fg_color="green")
         self.addPlayer_frame.grid(column=0,sticky="news")
-        self.listPlayer_frame = customtkinter.CTkScrollableFrame(self.main,width=600)
+        self.listPlayer_frame = customtkinter.CTkScrollableFrame(self.main,width=600,fg_color="blue")
         self.listPlayer_frame.grid(column=0,sticky="news")
         
         self.fullName = customtkinter.CTkEntry(self.addPlayer_frame,placeholder_text="fullName")
@@ -27,16 +27,9 @@ class PlayerPage(customtkinter.CTk):
         self.btn1 = customtkinter.CTkButton(self.addPlayer_frame,text="Add PLayer",command=self.addPlayer)
         self.btn1.grid(pady=10)
         
-        players = self.getAllPlayers()
-        for i in range(0,len(players)):
-            customtkinter.CTkLabel(self.listPlayer_frame,text=players[i][1]).grid(row=i,column=1)
-            customtkinter.CTkButton(self.listPlayer_frame,text="Edit",command=lambda id=players[i][0]:self.editPlayer(id)).grid(row=i,column=2)            
-            customtkinter.CTkButton(self.listPlayer_frame,text="Remove",command=lambda id=players[i][0]:self.deletePlayer(id)).grid(row=i,column=3) 
+        self.getAllPlayers()
         
-
-    def test(self,id):
-        print(id)
-    
+        
     def addPlayer(self):
         try:
             fullName = self.fullName.get()
@@ -49,6 +42,8 @@ class PlayerPage(customtkinter.CTk):
             cursor.execute("INSERT INTO player (fullname,rating,phone,email) VALUES (?,?,?,?)",(fullName,phone,email,rating))
             connect.commit()
             connect.close()
+            self.getAllPlayers()
+            self.clearForm()
             print("Player Addes")
         except:
             print("Failed to Add Player")
@@ -62,6 +57,7 @@ class PlayerPage(customtkinter.CTk):
             
             connect.commit()
             connect.close()
+            self.getAllPlayers()
             print("Player is deleted")
         except:
             print("Failed to delete player")
@@ -74,7 +70,12 @@ class PlayerPage(customtkinter.CTk):
             data = cursor.execute("SELECT * FROM player").fetchall()
             connect.commit()
             connect.close()
-            return data
+            self.cleanContainer(self.listPlayer_frame)
+            for i in range(0,len(data)):
+                customtkinter.CTkLabel(self.listPlayer_frame,text=data[i][1]).grid(row=i,column=1)
+                customtkinter.CTkButton(self.listPlayer_frame,text="Edit",command=lambda id=data[i][0]:self.editPlayer(id)).grid(row=i,column=2)            
+                customtkinter.CTkButton(self.listPlayer_frame,text="Remove",command=lambda id=data[i][0]:self.deletePlayer(id)).grid(row=i,column=3) 
+                
         except:
             return False
     
@@ -119,6 +120,7 @@ class PlayerPage(customtkinter.CTk):
             connect.close()
             self.btn1.configure(text="Add Player",command=self.addPlayer)
             self.clearForm()
+            self.getAllPlayers()
             print("player is updated")
         except:
             print("failed to update")
@@ -128,3 +130,7 @@ class PlayerPage(customtkinter.CTk):
         self.rating.delete(0,customtkinter.END)
         self.phone.delete(0,customtkinter.END)
         self.email.delete(0,customtkinter.END)
+        
+    def cleanContainer(self,container):
+        for widget in container.winfo_children(): 
+            widget.destroy()

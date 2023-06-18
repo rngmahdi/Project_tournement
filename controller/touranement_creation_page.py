@@ -37,6 +37,7 @@ class TouranementCreationPage(customtkinter.CTk):
         self.date.pack(pady=5,expand=True)
         self.btn1.pack(pady=5,expand=True)
         
+        
     # Method      
     
     def createNewTournament(self):
