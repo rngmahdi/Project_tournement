@@ -161,7 +161,7 @@ class TournamentList(customtkinter.CTk):
             print("error")
 
 
-    def removeTournament(self,id, container):
+    def removeTournament(self,id):
         try:
             connect = sqlite3.connect("./database/database.db")
             cursor = connect.cursor()
@@ -171,9 +171,9 @@ class TournamentList(customtkinter.CTk):
             connect.commit()
             connect.close()
 
-            MessageBox(container, "The Tournament is Deleted", "success")
+            MessageBox(self.main, "The Tournament is Deleted", "success")
         except:
-            MessageBox(container, "Failed to delete the tournament", "error")
+            MessageBox(self.main, "Failed to delete the tournament", "error")
 
     def matchPage(self,id):
         MatchPage()
