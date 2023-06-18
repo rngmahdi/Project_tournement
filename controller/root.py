@@ -1,5 +1,6 @@
 import customtkinter 
 import list_tournament_page #Function
+from list_tournament_page2 import TournamentList # Class
 from player_page import PlayerPage #class
 from touranement_creation_page import TouranementCreationPage #class
 from PIL import Image
@@ -50,7 +51,8 @@ class Root(customtkinter.CTk):
              
     def listTournamentPage(self):
         self.cleanContainer(self.main)
-        list_tournament_page.TournamentList(self.main)
+        # list_tournament_page.TournamentList(self.main)
+        TournamentList(self.main)
     
     def playerPage(self):
         self.cleanContainer(self.main)

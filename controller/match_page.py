@@ -1,4 +1,4 @@
 import customtkinter
 
-def window(root):
+class MatchPage():
     pass
