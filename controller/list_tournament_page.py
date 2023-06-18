@@ -3,7 +3,7 @@ from tkinter import ttk
 import customtkinter
 from PIL import Image
 import sqlite3
-from match_page import window
+from match_page import MatchPage
 from message_box import MessageBox
 # import root
 
