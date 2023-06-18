@@ -19,13 +19,14 @@ class TournamentList(customtkinter.CTk):
         # data = getTournamentData()
 
     def getAllTournaments(self):
+        self.cleanContainer(self.frame)
         try:
             connect = sqlite3.connect("./database/database.db")
             cursor = connect.cursor()
             data = cursor.execute("SELECT * FROM tournament").fetchall()
             connect.commit()
             connect.close()
-
+            
             if (len(data) != 0):
                 for i in range(len(data)):
                     #   print(data)
@@ -161,7 +162,8 @@ class TournamentList(customtkinter.CTk):
             print("error")
 
 
-    def removeTournament(self,id):
+    def removeTournament(self, id):
+        # print(id)
         try:
             connect = sqlite3.connect("./database/database.db")
             cursor = connect.cursor()
@@ -170,8 +172,8 @@ class TournamentList(customtkinter.CTk):
 
             connect.commit()
             connect.close()
-
             MessageBox(self.main, "The Tournament is Deleted", "success")
+            self.getAllTournaments()
         except:
             MessageBox(self.main, "Failed to delete the tournament", "error")
 
@@ -186,3 +188,7 @@ class TournamentList(customtkinter.CTk):
             self.matchPage(id)
         print(f"choice : {choice}")
         print(f"id {id}")
+
+    def cleanContainer(self,container):
+        for widget in container.winfo_children(): 
+            widget.destroy()
