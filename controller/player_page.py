@@ -27,42 +27,15 @@ class PlayerPage(customtkinter.CTk):
         self.btn1 = customtkinter.CTkButton(self.addPlayer_frame,text="Add PLayer",command=self.addPlayer)
         self.btn1.grid(pady=10)
         
+        players = self.getAllPlayers()
+        for i in range(0,len(players)):
+            customtkinter.CTkLabel(self.listPlayer_frame,text=players[i][1]).grid(row=i,column=1)
+            customtkinter.CTkButton(self.listPlayer_frame,text="Edit",command=lambda id=players[i][0]:self.editPlayer(id)).grid(row=i,column=2)            
+            customtkinter.CTkButton(self.listPlayer_frame,text="Remove",command=lambda id=players[i][0]:self.deletePlayer(id)).grid(row=i,column=3) 
         
-        self.tree = ttk.Treeview(self.listPlayer_frame, columns=('id','fullName', 'rating','phone' ,'email','tournamentId'), show='headings')
-        self.tree.pack()
-        self.tree.heading('id', text='id')
-        self.tree.heading('fullName', text='Full Name')
-        self.tree.heading('rating', text='Rating')
-        self.tree.heading('phone', text='Phone')
-        self.tree.heading('email', text='Email')
-        self.tree.heading('tournamentId', text='Tour Id')
 
-        self.tree.column('id', anchor=tk.CENTER, width=80)
-        self.tree.column('fullName', anchor=tk.CENTER, width=80)
-        self.tree.column('rating', anchor=tk.CENTER, width=80)
-        self.tree.column('phone', anchor=tk.CENTER, width=80)
-        self.tree.column('email', anchor=tk.CENTER, width=80)
-        self.tree.column('tournamentId', anchor=tk.CENTER, width=80)
-        
-        # print(self.getAllPlayers())
-        for elem in self.getAllPlayers():
-            self.tree.insert('', tk.END, values=elem)
-        
-        
-        self.tree.bind("<<TreeviewSelect>>", self.playerOps)
-
-    def playerOps(self,a):
-        frame = customtkinter.CTkFrame(self.addPlayer_frame)
-        
-        selectedItem = self.tree.selection()[0]
-        print(self.tree.item(selectedItem))
-        self.btn1.destroy()
-        self.btn1 = customtkinter.CTkButton(frame,text="Update PLayer")
-        self.btn1.grid(row=5,column=1)
-        self.btn1 = customtkinter.CTkButton(frame,text="Remove PLayer")
-        self.btn1.grid(row=5,column=2)
-        
-        frame.grid()
+    def test(self,id):
+        print(id)
     
     def addPlayer(self):
         try:
@@ -104,6 +77,54 @@ class PlayerPage(customtkinter.CTk):
             return data
         except:
             return False
+    
+    def getOnePlayer(self,id):
+        try:
+            connect = sqlite3.connect("./database/database.db")
+            cursor = connect.cursor()
+
+            data = cursor.execute("SELECT * FROM player WHERE id = ?",(id,)).fetchone()
+            connect.commit()
+            connect.close()
+            return data
+        except:
+            return False
+    
+    def editPlayer(self,id):
+        player = self.getOnePlayer(id)
+        print(player)
         
-    def updatePlayer(self):
-        pass
+        self.clearForm()
+        self.fullName.insert(customtkinter.END,player[1])
+        self.rating.insert(customtkinter.END,player[2])
+        self.phone.insert(customtkinter.END,player[3])
+        self.email.insert(customtkinter.END,player[4])
+        
+        
+        self.btn1.configure(text="Update",command=lambda id=player[0]:self.updatePlayer(id))
+        
+        
+    def updatePlayer(self,id):
+        
+        fullName = self.fullName.get()
+        phone = self.phone.get()
+        email = self.email.get()
+        rating = self.rating.get()
+        try:
+            connect = sqlite3.connect("./database/database.db")
+            cursor = connect.cursor()
+
+            data = cursor.execute("UPDATE player SET fullName = ? , rating = ? , phone = ? , email = ? WHERE id = ?;",(fullName,rating,phone,email,id))
+            connect.commit()
+            connect.close()
+            self.btn1.configure(text="Add Player",command=self.addPlayer)
+            self.clearForm()
+            print("player is updated")
+        except:
+            print("failed to update")
+    
+    def clearForm(self):
+        self.fullName.delete(0,customtkinter.END)
+        self.rating.delete(0,customtkinter.END)
+        self.phone.delete(0,customtkinter.END)
+        self.email.delete(0,customtkinter.END)
