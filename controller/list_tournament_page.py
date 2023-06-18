@@ -4,6 +4,7 @@ import customtkinter
 from PIL import Image
 import sqlite3
 from match_page import window
+from message_box import MessageBox
 # import root
 
 
@@ -63,9 +64,9 @@ def TournamentList(root):
             action_label.grid(row=5, column=0)
             actions = customtkinter.CTkFrame(div, height=30)
             actions.grid(row=5, column=1)
-            removeBtn = customtkinter.CTkButton(actions, text="Remove")
+            removeBtn = customtkinter.CTkButton(actions, text="Remove",command= lambda idtournament=data[i][0] : removeTournament(idtournament,root))
             removeBtn.grid(row=0, column=0)
-            updateBtn = customtkinter.CTkButton(actions, text="Edit")
+            # updateBtn = customtkinter.CTkButton(actions, text="Edit")
             idtournament = tournament_title_data.get()
 
             # updateBtn = customtkinter.CTkButton(
@@ -147,7 +148,19 @@ def updateInfos(id,fullname,title,type,place,date):
     except:
         print("error")
     
+def removeTournament(id,root):
+    try:
+            connect = sqlite3.connect("./database/database.db")
+            cursor = connect.cursor()
 
+            cursor.execute("DELETE FROM  tournament WHERE id = ? ",(id,))
+            
+            connect.commit()
+            connect.close()
+            
+            MessageBox(root,"The Tournament is Deleted","success")
+    except:
+            MessageBox(root,"Failed to delete the tournament","error")
 def optionMenu(choice,id,root):
     if(choice == "Edit Tournament"):
         updateTournament(id,root)
