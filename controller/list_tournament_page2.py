@@ -5,6 +5,7 @@ from PIL import Image
 import sqlite3
 from match_page import MatchPage
 from message_box import MessageBox
+from players_in_tournament_page import PlayerInTournament
 # import container
 
 
@@ -181,11 +182,16 @@ class TournamentList(customtkinter.CTk):
         MatchPage()
         # redirect to match page
 
+    def playerInTournaemtnPage(self,id):
+        PlayerInTournament(self.main)
+
     def optionMenu(self,choice, id, container):
         if (choice == "Edit Tournament"):
             self.updateTournament(id)
         elif(choice == "Matches"):
             self.matchPage(id)
+        elif (choice == "Players"):
+            self.playerInTournamentPage(id)
         print(f"choice : {choice}")
         print(f"id {id}")
 
