@@ -118,7 +118,6 @@ class PlayerPage(customtkinter.CTk):
     
     def editPlayer(self,id):
         player = self.getOnePlayer(id)
-        print(player)
         
         self.clearForm()
         self.fullName.insert(customtkinter.END,player[1])
