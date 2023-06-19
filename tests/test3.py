@@ -16,11 +16,8 @@ app.geometry("400x300")
 # switch_var = customtkinter.StringVar(value="on")
 # switch = customtkinter.CTkSwitch(app, text="CTkSwitch", command=switch_event,
 #                                  variable=switch_var, onvalue="on", offvalue="off").pack()
-def optionmenu_callback(choice):
-    print("optionmenu dropdown clicked:", choice)
-
-optionmenu = customtkinter.CTkOptionMenu(app, values=["option 1", "option 2"],
-                                         command=optionmenu_callback)
-optionmenu.pack()
+def slider_event(value):
+    print(value)
+slider = customtkinter.CTkSlider(app, from_=0, to=100, command=slider_event).pack()
 # optionmenu.set("Edit")
 app.mainloop()
