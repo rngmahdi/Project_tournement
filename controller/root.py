@@ -48,7 +48,7 @@ class Root(customtkinter.CTk):
     def tournamentCreationPage(self):
         self.cleanContainer(self.main)
         TouranementCreationPage(self.main)
-             
+    
     def listTournamentPage(self):
         self.cleanContainer(self.main)
         # list_tournament_page.TournamentList(self.main)
