@@ -182,7 +182,7 @@ class TournamentList(customtkinter.CTk):
         MatchPage()
         # redirect to match page
 
-    def playerInTournaemtnPage(self,id):
+    def playerInTournamentPage(self,id):
         PlayerInTournament(self.main)
 
     def optionMenu(self,choice, id, container):
