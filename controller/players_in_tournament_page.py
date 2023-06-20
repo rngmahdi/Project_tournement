@@ -3,8 +3,9 @@ from tkinter import *
 import sqlite3
 
 class PlayerInTournament(customtkinter.CTk):
-    def __init__(self, container):
+    def __init__(self, container,id):
         super().__init__()
+        self.id = id
         self.main = container
         self.frame = customtkinter.CTkToplevel(self.main)
         self.frame.geometry("600x500")
@@ -17,14 +18,14 @@ class PlayerInTournament(customtkinter.CTk):
         self.label.pack(padx=50)
         self.playersListContainer = customtkinter.CTkFrame(self.frame)
         self.playersListContainer.pack()
-        
         self.getPlayersJoined()
+        self.getAllPlayers()
 
-    def getPlayersJoined(self):
+    def getAllPlayers(self):
         try:
             connect = sqlite3.connect("./database/database.db")
             cursor = connect.cursor()
-            data = cursor.execute("SELECT * FROM player WHERE tournamentId = 25").fetchall()
+            # data = cursor.execute("SELECT * FROM player WHERE tournamentId = 25").fetchall()
             self.players = cursor.execute("SELECT * FROM player").fetchall()
             # if (len(data) == 0):
             #     print("no players")
@@ -34,24 +35,24 @@ class PlayerInTournament(customtkinter.CTk):
             # print(self.players)
             for i in self.players :
                 self.div = customtkinter.CTkFrame(self.playersListContainer)
-                fullname = StringVar(self.div,i[1])
+                fullname = StringVar(self.div,f"Full Name :  {i[1]}  ----")
                 self.playerName = customtkinter.CTkLabel(self.div,textvariable=fullname)
-                self.playerName.grid(row=0,column=0)
-                rating = StringVar(self.div,f"rating {i[2]}")
+                self.playerName.grid(row=0,column=0,padx=5)
+                rating = StringVar(self.div,f"Rating :  {i[2]}  ")
                 self.playerRating = customtkinter.CTkLabel(self.div,textvariable=rating)
                 self.playerRating.grid(row=0,column=1,padx=10)
-                print("1")
+                self.addBtn = customtkinter.CTkButton(self.div,text="ADD",width=70)
+                self.addBtn.grid(row=0,column=2)
                 self.div.pack(pady=4)
-                print("2")
 
         except:
             print("error")
 
-    def getAllPlayers(self):
+    def getPlayersJoined(self):
         try:
             connect = sqlite3.connect("./database/database.db")
             cusror = connect.cursor()
-            data = cursor.execute("SELECT * FROM player").fetchall()
+            data = cursor.execute("SELECT * FROM player WHERE tournamentID = ?",(self.id)).fetchall()
             connect.close()
             return data
         except:
