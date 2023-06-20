@@ -55,7 +55,7 @@ class PlayerPage(customtkinter.CTk):
                 connect = sqlite3.connect("./database/database.db")
                 cursor = connect.cursor()
 
-                cursor.execute("INSERT INTO player (fullname,rating,phone,email) VALUES (?,?,?,?)",(fullName,phone,email,rating))
+                cursor.execute("INSERT INTO player (fullname,rating,phone,email) VALUES (?,?,?,?)",(fullName,rating,phone,email))
                 connect.commit()
                 connect.close()
                 self.getAllPlayers()
