@@ -90,7 +90,7 @@ class TournamentList(customtkinter.CTk):
                         "Players", "Edit Tournament", "Matches"], command=lambda choice=self.optionSelected, id=data[i][0]: self.optionMenu(choice, id,self.main), variable=self.optionSelected)
                     self.updateBtn.set("Update")
                     # print(idtournament)
-                    self.updateBtn.grid(row=0, column=1)
+                    self.updateBtn.grid(row=0, column=1,padx=10)
         except:
             return False
 
