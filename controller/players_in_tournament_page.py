@@ -24,12 +24,15 @@ class PlayerInTournament(customtkinter.CTk):
             connect = sqlite3.connect("./database/database.db")
             cursor = connect.cursor()
             data = cursor.execute("SELECT * FROM player WHERE tournamentId = 24").fetchall()
-            if (len(data) == 0):
-                print("no players")
+            players = cursor.execute("SELECT * FROM player").fetchall()
+            # if (len(data) == 0):
+            #     print("no players")
+            print(len(players))
             connect.commit()
             connect.close()
-            for i in range(len(data)):
-                players = self.getAllplayers()
+            for i in range(len(players)):
+                # players = self.getAllplayers()
+                # print(players)
                 fullname = StringVar(players[i][1])
                 print(fullname)
                 self.div = customtkinter.CTkFrame(self.playersListContainer)
