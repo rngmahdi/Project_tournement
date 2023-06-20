@@ -185,7 +185,7 @@ class TournamentList(customtkinter.CTk):
         # redirect to match page
 
     def playerInTournamentPage(self,id):
-        PlayerInTournament(self.main)
+        PlayerInTournament(self.main,id)
 
     def optionMenu(self,choice, id, container):
         if (choice == "Edit Tournament"):
