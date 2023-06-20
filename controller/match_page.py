@@ -1,6 +1,14 @@
 
 import customtkinter
+import os
+import sys
+import inspect
 
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir) 
+from model.match import Match
+from model.database import DataBase
 
 class MatchPage(customtkinter.CTk):
     def __init__(self,container,id):
@@ -29,13 +37,15 @@ class MatchPage(customtkinter.CTk):
         databaseController = DataBase("./database/database.db")
         allMatches = databaseController.customQuery("SELECT * FROM match WHERE tournamentId = ?;",(self.selectedTournamentId,))
         allPlayers = databaseController.customQuery("SELECT * FROM player WHERE tournamentId = ?;",(self.selectedTournamentId,))
+        print(allPlayers)
         
         # see if valid
-        if not(len(allPlayers) % 2) or len(allMatches) > 0:
+        if not(len(allPlayers) % 2) or len(allMatches) > 0 or len(allPlayers) == 0:
             # Matches are generated
-            pass
+            print("didn't work")            
         else:
             # generate matches
+            print("didn't work")            
             # generate match and save
             for player1 in allPlayers:
                 for i in range(0,len(allPlayers)):
