@@ -181,8 +181,7 @@ class TournamentList(customtkinter.CTk):
             MessageBox(self.main, "Failed to delete the tournament", "error")
 
     def matchPage(self,id):
-        MatchPage()
-        # redirect to match page
+        MatchPage(self.main,id)
 
     def playerInTournamentPage(self,id):
         PlayerInTournament(self.main,id)

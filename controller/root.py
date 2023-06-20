@@ -1,4 +1,5 @@
 import customtkinter 
+import list_tournament_page #Function
 from list_tournament_page import TournamentList # Class
 from player_page import PlayerPage #class
 from touranement_creation_page import TouranementCreationPage #class
