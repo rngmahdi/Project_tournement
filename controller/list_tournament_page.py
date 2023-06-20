@@ -194,8 +194,8 @@ class TournamentList(customtkinter.CTk):
             self.matchPage(id)
         elif (choice == "Players"):
             self.playerInTournamentPage(id)
-        print(f"choice : {choice}")
-        print(f"id {id}")
+        # print(f"choice : {choice}")
+        # print(f"id {id}")
 
     def cleanContainer(self,container):
         for widget in container.winfo_children(): 
