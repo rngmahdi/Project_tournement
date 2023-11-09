@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Dec 07 09:05:58 CET 2022
+netty-transport-native-epoll-4.1.77.Final-linux-aarch_64.jar>minecraft-libraries=
+netty-transport-native-epoll-4.1.77.Final.pom>minecraft-libraries=
+netty-transport-native-epoll-4.1.77.Final-linux-x86_64.jar>minecraft-libraries=

@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "sessionSecret": "{\"id\":\"8f36a3ce-3ea3-4215-82dd-47f37ef72170\",\"version\":1,\"expires_at\":2002060800000}",
+    "userId": "7e5fe82d-1a5e-4301-822f-4d96c74f1867",
+    "username": "mahdirng",
+    "currentConnection": "Username-Password-Authentication"
+  },
+  "analyticsDeviceId": "7578b551-7d37-4414-9a99-ac5eccbc44a8",
+  "uuid": "d7268259-93d8-4047-be4f-f40d9b864547"
+}
