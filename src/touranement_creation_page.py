@@ -2,10 +2,10 @@ import customtkinter
 import sqlite3
 from tkinter import ttk
 import tkinter as tk
-import list_tournament_page
+# import list_tournament_page
 from PIL import Image
-from player_page import PlayerPage
-from message_box import MessageBox
+from .player_page import PlayerPage
+from .message_box import MessageBox
 
 class TouranementCreationPage(customtkinter.CTk):
     def __init__(self,container):
@@ -18,7 +18,7 @@ class TouranementCreationPage(customtkinter.CTk):
         self.input_frame = customtkinter.CTkFrame(self.main)
         self.input_frame.grid(row=0,column=0,sticky="news")
         
-        self.img = customtkinter.CTkImage(dark_image=Image.open("../public/img/tbg.png"),size=(300,250))
+        self.img = customtkinter.CTkImage(dark_image=Image.open("./public/img/tbg.png"),size=(300,250))
         
         self.img_bg = customtkinter.CTkLabel(self.main,image=self.img,text="")
         self.img_bg.grid(row=0,column=1,sticky="news")
@@ -52,7 +52,7 @@ class TouranementCreationPage(customtkinter.CTk):
                 MessageBox(self.main,"Not Valid","warning")
                 
             else:
-                connect = sqlite3.connect("../database/database.db")
+                connect = sqlite3.connect("./database/database.db")
                 cursor = connect.cursor()
 
                 cursor.execute("INSERT INTO tournament (title,place,date,name_of_creator,type) VALUES (?,?,?,?,?)",(title,place,date,fullName,type))

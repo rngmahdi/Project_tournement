@@ -17,11 +17,11 @@ class MessageBox(customtkinter.CTkToplevel):
         # self.mainloop()
     def packImage(self):
         if(self.case == "success"):
-            url = "../public/img/success.png"
+            url = "./public/img/success.png"
         elif(self.case == "warning"):
-            url = "../public/img/warning.png"
+            url = "./public/img/warning.png"
         elif(self.case == "error"):
-            url = "../public/img/error.png"
+            url = "./public/img/error.png"
         
         self.img = customtkinter.CTkImage(dark_image=Image.open(url),size=(30,30))
         self.img_bg = customtkinter.CTkLabel(self,image=self.img,text="")

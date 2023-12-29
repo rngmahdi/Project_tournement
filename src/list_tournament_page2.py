@@ -3,8 +3,8 @@ from tkinter import ttk
 import customtkinter
 from PIL import Image
 import sqlite3
-from match_page import MatchPage
-from message_box import MessageBox
+from .match_page import MatchPage
+from .message_box import MessageBox
 # import container
 
 
@@ -20,7 +20,7 @@ class TournamentList(customtkinter.CTk):
 
     def getAllTournaments(self):
         try:
-            connect = sqlite3.connect("../database/database.db")
+            connect = sqlite3.connect("./database/database.db")
             cursor = connect.cursor()
             data = cursor.execute("SELECT * FROM tournament").fetchall()
             connect.commit()
@@ -94,7 +94,7 @@ class TournamentList(customtkinter.CTk):
 
 
     def getSpecificTournament(self,idTournament):
-        connect = sqlite3.connect("../database/database.db")
+        connect = sqlite3.connect("./database/database.db")
         cursor = connect.cursor()
         tournament = cursor.execute(
             f"SELECT * FROM tournament where id = ?", (idTournament,)).fetchone()
@@ -116,7 +116,7 @@ class TournamentList(customtkinter.CTk):
         input_frame = customtkinter.CTkFrame(window)
         input_frame.grid(row=0, column=0, sticky="news")
 
-        img = customtkinter.CTkImage(dark_image=Image.open("../public/img/tbg.png"), size=(300, 250))
+        img = customtkinter.CTkImage(dark_image=Image.open("./public/img/tbg.png"), size=(300, 250))
 
         img_bg = customtkinter.CTkLabel(window, image=img, text="")
         img_bg.grid(row=0, column=1, sticky="news")
@@ -151,7 +151,7 @@ class TournamentList(customtkinter.CTk):
         placeNew = place.get()
         dateNew = date.get()
         try:
-            connect = sqlite3.connect("../database/database.db")
+            connect = sqlite3.connect("./database/database.db")
             cursor = connect.cursor()
             cursor.execute("UPDATE tournament SET title = ? , place = ? , date = ? , name_of_creator = ? , type = ? WHERE id = ? ",
                         (titleNew, placeNew, dateNew, fulnameNew, typeNew, id))
@@ -163,7 +163,7 @@ class TournamentList(customtkinter.CTk):
 
     def removeTournament(self,id, container):
         try:
-            connect = sqlite3.connect("../database/database.db")
+            connect = sqlite3.connect("./database/database.db")
             cursor = connect.cursor()
 
             cursor.execute("DELETE FROM  tournament WHERE id = ? ", (id,))

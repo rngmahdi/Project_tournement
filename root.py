@@ -1,11 +1,11 @@
 import customtkinter 
-import list_tournament_page #Function
-from list_tournament_page2 import TournamentList # Class
-from player_page import PlayerPage #class
-from touranement_creation_page import TouranementCreationPage #class
+import src.list_tournament_page #Function
+from src.list_tournament_page2 import TournamentList # Class
+from src.player_page import PlayerPage #class
+from src.touranement_creation_page import TouranementCreationPage #class
 from PIL import Image
-from message_box import MessageBox
-customtkinter.set_default_color_theme("../config/custom_theme.json")
+from src.message_box import MessageBox
+customtkinter.set_default_color_theme("./config/custom_theme.json")
 
 
 class Root(customtkinter.CTk):
@@ -18,14 +18,14 @@ class Root(customtkinter.CTk):
         self.rowconfigure(1,weight=13)
         self.geometry("600x500")
         self.title("Tournament Manager")
-        self.iconbitmap("../public/img/icon_edit.ico")
+        self.iconbitmap("./public/img/icon_edit.ico")
         
         
         # Structure
         self.nav = customtkinter.CTkFrame(self,height=40)
         self.main = customtkinter.CTkFrame(self)
         
-        self.img = customtkinter.CTkImage(dark_image=Image.open("../public/img/icon_edit.png"),size=(15,15))
+        self.img = customtkinter.CTkImage(dark_image=Image.open("./public/img/icon_edit.png"),size=(15,15))
         # Menu 
         self.route_tournament_creation = customtkinter.CTkButton(self.nav,image=self.img,text="Tournament",command=self.tournamentCreationPage)
         self.route_tournaments_list = customtkinter.CTkButton(self.nav,text="List Tournament",command=self.listTournamentPage)
@@ -64,4 +64,5 @@ class Root(customtkinter.CTk):
             
     def destroy(self):
         return self.quit()
+    
 Root()

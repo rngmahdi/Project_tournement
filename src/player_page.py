@@ -3,7 +3,7 @@ import sqlite3
 from tkinter import ttk
 import tkinter as tk
 from PIL import Image
-from message_box import MessageBox
+from .message_box import MessageBox
 
 class PlayerPage(customtkinter.CTk):
     def __init__(self,container):
@@ -35,7 +35,7 @@ class PlayerPage(customtkinter.CTk):
         self.form_img = customtkinter.CTkFrame(self.addPlayer_frame)
         self.form_img.grid(row=0,column=0,sticky="news")
         
-        self.img = customtkinter.CTkImage(dark_image=Image.open("../public/img/pbg.png"),size=(300,250))
+        self.img = customtkinter.CTkImage(dark_image=Image.open("./public/img/pbg.png"),size=(300,250))
         
         self.img_bg = customtkinter.CTkLabel(self.form_img,image=self.img,text="")
         self.img_bg.grid(row=0,column=1,sticky="news")
@@ -52,7 +52,7 @@ class PlayerPage(customtkinter.CTk):
             if(fullName == "" or phone == "" or email == "" or rating == ""):
                 MessageBox(self.main,"Not a Valid Player","warning")
             else:
-                connect = sqlite3.connect("../database/database.db")
+                connect = sqlite3.connect("./database/database.db")
                 cursor = connect.cursor()
 
                 cursor.execute("INSERT INTO player (fullname,rating,phone,email) VALUES (?,?,?,?)",(fullName,phone,email,rating))
@@ -67,7 +67,7 @@ class PlayerPage(customtkinter.CTk):
             
     def deletePlayer(self,id):
         try:
-            connect = sqlite3.connect("../database/database.db")
+            connect = sqlite3.connect("./database/database.db")
             cursor = connect.cursor()
 
             cursor.execute("DELETE FROM  player WHERE id = ? ",(id,))
@@ -81,7 +81,7 @@ class PlayerPage(customtkinter.CTk):
             
     def getAllPlayers(self):
         try:
-            connect = sqlite3.connect("../database/database.db")
+            connect = sqlite3.connect("./database/database.db")
             cursor = connect.cursor()
 
             data = cursor.execute("SELECT * FROM player").fetchall()
@@ -106,7 +106,7 @@ class PlayerPage(customtkinter.CTk):
     
     def getOnePlayer(self,id):
         try:
-            connect = sqlite3.connect("../database/database.db")
+            connect = sqlite3.connect("./database/database.db")
             cursor = connect.cursor()
 
             data = cursor.execute("SELECT * FROM player WHERE id = ?",(id,)).fetchone()
@@ -137,7 +137,7 @@ class PlayerPage(customtkinter.CTk):
         email = self.email.get()
         rating = self.rating.get()
         try:
-            connect = sqlite3.connect("../database/database.db")
+            connect = sqlite3.connect("./database/database.db")
             cursor = connect.cursor()
 
             data = cursor.execute("UPDATE player SET fullName = ? , rating = ? , phone = ? , email = ? WHERE id = ?;",(fullName,rating,phone,email,id))
