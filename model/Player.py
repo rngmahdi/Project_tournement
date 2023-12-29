@@ -11,19 +11,18 @@ class Player:
     def create(self):
         try:
             db = connector.Connector()
-            db.cursor.execute("INSERT INTO player (fullname,rating,phone,email) VALUES (?,?,?,?)",
-                              (self.fullName, self.phone, self.email, self.rating))
+            db.cursor.execute("INSERT INTO player (fullname,rating,phone,email) VALUES (?,?,?,?)",(self.fullName, self.phone, self.email, self.rating))
             db.connect.commit()
             db.cursor.close()
             
         except:
             return -1
 
-    def read():
+    def read(id):
         try:
             db = connector.Connector()
 
-            data = db.cursor.execute("SELECT * FROM player WHERE id = ?",(id,)).fetchone()
+            data = db.cursor.execute("SELECT * FROM player WHERE id = ?",(id)).fetchone()
             db.connect.commit()
             db.connect.close()
             
@@ -31,15 +30,14 @@ class Player:
         except:
             return -1
 
-    def update():
+    def update(self,id):
         try:
             db = connector.Connector()
 
-            data = db.cursor.execute("UPDATE player SET fullName = ? , rating = ? , phone = ? , email = ? WHERE id = ?;",(fullName,rating,phone,email,id))
+            db.cursor.execute("UPDATE player SET fullName = ? , rating = ? , phone = ? , email = ? WHERE id = ?;",(self.fullname,self.rating,self.phone,self.email,id))
             db.connect.commit()
             db.connect.close()
 
-            return data
         except:
             return -1
 
@@ -66,4 +64,4 @@ class Player:
 
             return data
         except:
-            return False
+            return -1
